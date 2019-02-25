@@ -1,0 +1,55 @@
+<% include ../partials/header.ejs %>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+          <h3>Favourite Books List </h3>
+          <!-- A href requesting get from books routes and passing id as the parameter for adding a record -->
+          <a href="../books/add" class="btn btn-primary"><i class="fa fa-plus"></i> Add a book</a>
+          <br>
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th class="text-center">Price</th>
+                  <th class="text-center">Author</th>
+                  <th class="text-center">Genre</th>
+                  <th class="text-center">Edit</th>
+                  <th class="text-center">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Template Row -->
+                <% for (let count = 0; count < books.length; count++) { %>
+                <tr>
+                  <td><%= books[count].Title %></td>
+                  <td class="text-center">$<%= books[count].Price %></td>
+                  <td class="text-center"><%= books[count].Author %></td>
+                  <td class="text-center"><%= books[count].Genre %></td>
+
+                  <td class="text-center">
+                  <!-- A href requesting get from books routes and passing id as the parameter for editing a record  -->
+                   <a href="../books/<%= books[count].id %>" class="btn btn-primary"><i class="fas fa fa-align-justify"></i> </a>
+                  </td>
+
+                  <td class="text-center">
+                    <!-- A href requesting get from books routes and passing id as the parameter for deletion -->
+                    <a href="../books/delete/<%= books[count].id %>" class="btn btn-primary"><i class="fas fa fa-ban"></i> </a>
+                  </td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+           <div class="col-md-offset-1 col-md-10 text-center">
+            <ul class="pagination pagination-lg pager" id="myPager"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<% include ../partials/footer.ejs %>
+
+
