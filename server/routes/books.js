@@ -41,6 +41,7 @@ router.get('/add', (req, res, next) => {
       res.render('books/details',
        {
         title: 'Add Books',
+        //Return nothing just the title as we are using same page for adding and editing.  
         books: books
         
       
@@ -54,10 +55,7 @@ router.get('/add', (req, res, next) => {
 // POST process the Book Details page and create a new Book - CREATE
 router.post('/add', (req, res, next) => {
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
-
+//create a newbook object with all the values from frontend
     let newBook = book({
       "Title": req.body.title,
       "Price": req.body.price,
@@ -65,12 +63,14 @@ router.post('/add', (req, res, next) => {
       "Genre": req.body.genre
   });
 
+  //add data to the mongo database
   book.create(newBook, (err, book) => {
       if(err) {
           console.log(err);
           res.end(err);
       }
       else {
+        //redirect back to the books page
         res.redirect('/books');
       }
   });
@@ -80,9 +80,7 @@ router.post('/add', (req, res, next) => {
 // GET the Book Details page in order to edit an existing Book
 router.get('/:id', (req, res, next) => {
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+    //get id from the parameter and find by id in mongo database and populate the textboxes
     let booksid = req.params.id;
     book.findById(booksid, (err, bookObject) => {
       if (err) {
@@ -101,10 +99,7 @@ router.get('/:id', (req, res, next) => {
 
 // POST - process the information passed from the details form and update the document
 router.post('/:id', (req, res, next) => {
-
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+//once we hit the submit buton we fetch all the data from frontend or ejs and update it to database
     let bookid = req.params.id;
 
     let updatedBook = book({
@@ -127,10 +122,7 @@ router.post('/:id', (req, res, next) => {
 
 // GET - process the delete by user id
 router.get('/delete/:id', (req, res, next) => {
-
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+//delete the user by id from mongodb
 
     let bookid = req.params.id;
     book.remove({_id: bookid}, (err) => {
